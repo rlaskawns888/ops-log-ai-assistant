@@ -1,0 +1,1576 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dineug/erd-editor/main/json-schema/schema.json",
+  "version": "3.0.0",
+  "settings": {
+    "width": 3000,
+    "height": 2000,
+    "scrollTop": -149.203,
+    "scrollLeft": -411,
+    "zoomLevel": 0.95,
+    "show": 511,
+    "database": 16,
+    "databaseName": "log_ai_db",
+    "canvasType": "ERD",
+    "language": 16,
+    "tableNameCase": 8,
+    "columnNameCase": 8,
+    "bracketType": 2,
+    "relationshipDataTypeSync": true,
+    "relationshipOptimization": true,
+    "columnOrder": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "maxWidthComment": 80,
+    "ignoreSaveSettings": 0
+  },
+  "doc": {
+    "tableIds": [
+      "table_documents",
+      "table_document_chunks",
+      "table_log_analysis_requests",
+      "table_log_analysis_results",
+      "table_log_analysis_references",
+      "table_ai_feedbacks"
+    ],
+    "relationshipIds": [
+      "rel_documents_document_chunks",
+      "rel_requests_results",
+      "rel_results_references",
+      "rel_chunks_references",
+      "rel_results_feedbacks"
+    ],
+    "indexIds": [
+      "index_idx_document_chunks_document_id",
+      "index_idx_log_analysis_requests_status",
+      "index_idx_log_analysis_requests_created_at",
+      "index_idx_log_analysis_results_request_id",
+      "index_idx_log_analysis_references_result_id",
+      "index_idx_log_analysis_references_chunk_id",
+      "index_idx_ai_feedbacks_result_id"
+    ],
+    "memoIds": []
+  },
+  "collections": {
+    "tableEntities": {
+      "table_documents": {
+        "id": "table_documents",
+        "name": "documents",
+        "comment": "운영 문서 원본 정보를 저장하는 테이블",
+        "columnIds": [
+          "column_documents_id",
+          "column_documents_title",
+          "column_documents_document_type",
+          "column_documents_source",
+          "column_documents_content",
+          "column_documents_created_at",
+          "column_documents_updated_at"
+        ],
+        "seqColumnIds": [
+          "column_documents_id",
+          "column_documents_title",
+          "column_documents_document_type",
+          "column_documents_source",
+          "column_documents_content",
+          "column_documents_created_at",
+          "column_documents_updated_at"
+        ],
+        "ui": {
+          "x": 90.7692,
+          "y": 96.9231,
+          "zIndex": 1,
+          "widthName": 61,
+          "widthComment": 210,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659963971,
+          "createAt": 1778659900847
+        }
+      },
+      "table_document_chunks": {
+        "id": "table_document_chunks",
+        "name": "document_chunks",
+        "comment": "운영 문서를 chunk 단위로 분리하고 embedding vector를 저장하는 테이블",
+        "columnIds": [
+          "column_document_chunks_id",
+          "column_document_chunks_document_id",
+          "column_document_chunks_chunk_index",
+          "column_document_chunks_content",
+          "column_document_chunks_embedding",
+          "column_document_chunks_token_count",
+          "column_document_chunks_metadata",
+          "column_document_chunks_created_at"
+        ],
+        "seqColumnIds": [
+          "column_document_chunks_id",
+          "column_document_chunks_document_id",
+          "column_document_chunks_chunk_index",
+          "column_document_chunks_content",
+          "column_document_chunks_embedding",
+          "column_document_chunks_token_count",
+          "column_document_chunks_metadata",
+          "column_document_chunks_created_at"
+        ],
+        "ui": {
+          "x": 863.2719,
+          "y": 21.4951,
+          "zIndex": 2,
+          "widthName": 98,
+          "widthComment": 394,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659973643,
+          "createAt": 1778659900847
+        }
+      },
+      "table_log_analysis_requests": {
+        "id": "table_log_analysis_requests",
+        "name": "log_analysis_requests",
+        "comment": "사용자의 운영 로그 분석 요청 원본을 저장하는 테이블",
+        "columnIds": [
+          "column_log_analysis_requests_id",
+          "column_log_analysis_requests_request_title",
+          "column_log_analysis_requests_raw_log",
+          "column_log_analysis_requests_service_name",
+          "column_log_analysis_requests_environment",
+          "column_log_analysis_requests_log_level",
+          "column_log_analysis_requests_status",
+          "column_log_analysis_requests_created_at",
+          "column_log_analysis_requests_updated_at"
+        ],
+        "seqColumnIds": [
+          "column_log_analysis_requests_id",
+          "column_log_analysis_requests_request_title",
+          "column_log_analysis_requests_raw_log",
+          "column_log_analysis_requests_service_name",
+          "column_log_analysis_requests_environment",
+          "column_log_analysis_requests_log_level",
+          "column_log_analysis_requests_status",
+          "column_log_analysis_requests_created_at",
+          "column_log_analysis_requests_updated_at"
+        ],
+        "ui": {
+          "x": 93.8462,
+          "y": 424.6154,
+          "zIndex": 3,
+          "widthName": 115,
+          "widthComment": 289,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659969020,
+          "createAt": 1778659900847
+        }
+      },
+      "table_log_analysis_results": {
+        "id": "table_log_analysis_results",
+        "name": "log_analysis_results",
+        "comment": "LLM이 생성한 로그 분석 결과를 저장하는 테이블",
+        "columnIds": [
+          "column_log_analysis_results_id",
+          "column_log_analysis_results_request_id",
+          "column_log_analysis_results_summary",
+          "column_log_analysis_results_root_cause",
+          "column_log_analysis_results_recommended_action",
+          "column_log_analysis_results_severity",
+          "column_log_analysis_results_model_name",
+          "column_log_analysis_results_prompt_version",
+          "column_log_analysis_results_input_token_count",
+          "column_log_analysis_results_output_token_count",
+          "column_log_analysis_results_created_at"
+        ],
+        "seqColumnIds": [
+          "column_log_analysis_results_id",
+          "column_log_analysis_results_request_id",
+          "column_log_analysis_results_summary",
+          "column_log_analysis_results_root_cause",
+          "column_log_analysis_results_recommended_action",
+          "column_log_analysis_results_severity",
+          "column_log_analysis_results_model_name",
+          "column_log_analysis_results_prompt_version",
+          "column_log_analysis_results_input_token_count",
+          "column_log_analysis_results_output_token_count",
+          "column_log_analysis_results_created_at"
+        ],
+        "ui": {
+          "x": 810.7321,
+          "y": 417.3865,
+          "zIndex": 4,
+          "widthName": 104,
+          "widthComment": 260,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659970220,
+          "createAt": 1778659900847
+        }
+      },
+      "table_log_analysis_references": {
+        "id": "table_log_analysis_references",
+        "name": "log_analysis_references",
+        "comment": "AI 분석 결과가 참고한 문서 chunk 근거 정보를 저장하는 테이블",
+        "columnIds": [
+          "column_log_analysis_references_id",
+          "column_log_analysis_references_result_id",
+          "column_log_analysis_references_document_chunk_id",
+          "column_log_analysis_references_similarity_score",
+          "column_log_analysis_references_distance",
+          "column_log_analysis_references_rank_order",
+          "column_log_analysis_references_created_at"
+        ],
+        "seqColumnIds": [
+          "column_log_analysis_references_id",
+          "column_log_analysis_references_result_id",
+          "column_log_analysis_references_document_chunk_id",
+          "column_log_analysis_references_similarity_score",
+          "column_log_analysis_references_distance",
+          "column_log_analysis_references_rank_order",
+          "column_log_analysis_references_created_at"
+        ],
+        "ui": {
+          "x": 1554.7995,
+          "y": 220.3901,
+          "zIndex": 5,
+          "widthName": 124,
+          "widthComment": 338,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659972669,
+          "createAt": 1778659900847
+        }
+      },
+      "table_ai_feedbacks": {
+        "id": "table_ai_feedbacks",
+        "name": "ai_feedbacks",
+        "comment": "AI 분석 결과에 대한 사용자 피드백을 저장하는 테이블",
+        "columnIds": [
+          "column_ai_feedbacks_id",
+          "column_ai_feedbacks_result_id",
+          "column_ai_feedbacks_rating",
+          "column_ai_feedbacks_feedback_type",
+          "column_ai_feedbacks_comment",
+          "column_ai_feedbacks_created_at"
+        ],
+        "seqColumnIds": [
+          "column_ai_feedbacks_id",
+          "column_ai_feedbacks_result_id",
+          "column_ai_feedbacks_rating",
+          "column_ai_feedbacks_feedback_type",
+          "column_ai_feedbacks_comment",
+          "column_ai_feedbacks_created_at"
+        ],
+        "ui": {
+          "x": 1571.0287,
+          "y": 596.8489,
+          "zIndex": 6,
+          "widthName": 69,
+          "widthComment": 288,
+          "color": "#ffffff"
+        },
+        "meta": {
+          "updateAt": 1778659978141,
+          "createAt": 1778659900847
+        }
+      }
+    },
+    "tableColumnEntities": {
+      "column_documents_id": {
+        "id": "column_documents_id",
+        "tableId": "table_documents",
+        "name": "id",
+        "comment": "문서 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 68,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_title": {
+        "id": "column_documents_title",
+        "tableId": "table_documents",
+        "name": "title",
+        "comment": "운영 문서 제목",
+        "dataType": "VARCHAR(255)",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 81,
+          "widthDataType": 81,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_document_type": {
+        "id": "column_documents_document_type",
+        "tableId": "table_documents",
+        "name": "document_type",
+        "comment": "문서 유형. 예: TROUBLESHOOTING, RUNBOOK, INCIDENT_GUIDE",
+        "dataType": "VARCHAR(50)",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 84,
+          "widthComment": 345,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_source": {
+        "id": "column_documents_source",
+        "tableId": "table_documents",
+        "name": "source",
+        "comment": "문서 출처. 예: internal wiki, markdown file, manual",
+        "dataType": "VARCHAR(500)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 267,
+          "widthDataType": 81,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_content": {
+        "id": "column_documents_content",
+        "tableId": "table_documents",
+        "name": "content",
+        "comment": "운영 문서 원본 전체 내용",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 135,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_created_at": {
+        "id": "column_documents_created_at",
+        "tableId": "table_documents",
+        "name": "created_at",
+        "comment": "문서 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 77,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_documents_updated_at": {
+        "id": "column_documents_updated_at",
+        "tableId": "table_documents",
+        "name": "updated_at",
+        "comment": "문서 수정일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 62,
+          "widthComment": 77,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_id": {
+        "id": "column_document_chunks_id",
+        "tableId": "table_document_chunks",
+        "name": "id",
+        "comment": "문서 chunk 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 103,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_document_id": {
+        "id": "column_document_chunks_document_id",
+        "tableId": "table_document_chunks",
+        "name": "document_id",
+        "comment": "원본 문서 ID",
+        "dataType": "BIGINT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 2,
+          "widthName": 71,
+          "widthComment": 68,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_chunk_index": {
+        "id": "column_document_chunks_chunk_index",
+        "tableId": "table_document_chunks",
+        "name": "chunk_index",
+        "comment": "문서 내 chunk 순서",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 67,
+          "widthComment": 104,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_content": {
+        "id": "column_document_chunks_content",
+        "tableId": "table_document_chunks",
+        "name": "content",
+        "comment": "chunk 본문 내용",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 88,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_embedding": {
+        "id": "column_document_chunks_embedding",
+        "tableId": "table_document_chunks",
+        "name": "embedding",
+        "comment": "chunk 내용을 embedding 모델로 변환한 vector 값",
+        "dataType": "vector(1536)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 63,
+          "widthComment": 267,
+          "widthDataType": 68,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_token_count": {
+        "id": "column_document_chunks_token_count",
+        "tableId": "table_document_chunks",
+        "name": "token_count",
+        "comment": "chunk의 토큰 수",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 67,
+          "widthComment": 88,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_metadata": {
+        "id": "column_document_chunks_metadata",
+        "tableId": "table_document_chunks",
+        "name": "metadata",
+        "comment": "chunk 관련 추가 메타데이터. 예: section, page, tags",
+        "dataType": "JSONB",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 274,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_document_chunks_created_at": {
+        "id": "column_document_chunks_created_at",
+        "tableId": "table_document_chunks",
+        "name": "created_at",
+        "comment": "chunk 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 85,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_id": {
+        "id": "column_log_analysis_requests_id",
+        "tableId": "table_log_analysis_requests",
+        "name": "id",
+        "comment": "로그 분석 요청 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 123,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_request_title": {
+        "id": "column_log_analysis_requests_request_title",
+        "tableId": "table_log_analysis_requests",
+        "name": "request_title",
+        "comment": "로그 분석 요청 제목",
+        "dataType": "VARCHAR(255)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 67,
+          "widthComment": 108,
+          "widthDataType": 81,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_raw_log": {
+        "id": "column_log_analysis_requests_raw_log",
+        "tableId": "table_log_analysis_requests",
+        "name": "raw_log",
+        "comment": "사용자가 입력한 원본 로그 내용",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 171,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_service_name": {
+        "id": "column_log_analysis_requests_service_name",
+        "tableId": "table_log_analysis_requests",
+        "name": "service_name",
+        "comment": "로그가 발생한 서비스명",
+        "dataType": "VARCHAR(100)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 73,
+          "widthComment": 129,
+          "widthDataType": 81,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_environment": {
+        "id": "column_log_analysis_requests_environment",
+        "tableId": "table_log_analysis_requests",
+        "name": "environment",
+        "comment": "로그 발생 환경. 예: dev, staging, prod",
+        "dataType": "VARCHAR(50)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 69,
+          "widthComment": 200,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_log_level": {
+        "id": "column_log_analysis_requests_log_level",
+        "tableId": "table_log_analysis_requests",
+        "name": "log_level",
+        "comment": "로그 레벨. 예: INFO, WARN, ERROR",
+        "dataType": "VARCHAR(20)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 187,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_status": {
+        "id": "column_log_analysis_requests_status",
+        "tableId": "table_log_analysis_requests",
+        "name": "status",
+        "comment": "분석 요청 처리 상태. 예: PENDING, PROCESSING, COMPLETED, FAILED",
+        "dataType": "VARCHAR(30)",
+        "default": "'PENDING'",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 372,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_created_at": {
+        "id": "column_log_analysis_requests_created_at",
+        "tableId": "table_log_analysis_requests",
+        "name": "created_at",
+        "comment": "분석 요청 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 105,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_requests_updated_at": {
+        "id": "column_log_analysis_requests_updated_at",
+        "tableId": "table_log_analysis_requests",
+        "name": "updated_at",
+        "comment": "분석 요청 수정일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 62,
+          "widthComment": 105,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_id": {
+        "id": "column_log_analysis_results_id",
+        "tableId": "table_log_analysis_results",
+        "name": "id",
+        "comment": "AI 분석 결과 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 110,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_request_id": {
+        "id": "column_log_analysis_results_request_id",
+        "tableId": "table_log_analysis_results",
+        "name": "request_id",
+        "comment": "분석 요청 ID",
+        "dataType": "BIGINT",
+        "default": "",
+        "options": 12,
+        "ui": {
+          "keys": 2,
+          "widthName": 60,
+          "widthComment": 68,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_summary": {
+        "id": "column_log_analysis_results_summary",
+        "tableId": "table_log_analysis_results",
+        "name": "summary",
+        "comment": "AI가 생성한 로그 분석 요약",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 146,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_root_cause": {
+        "id": "column_log_analysis_results_root_cause",
+        "tableId": "table_log_analysis_results",
+        "name": "root_cause",
+        "comment": "AI가 추정한 장애 또는 오류 원인",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 173,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_recommended_action": {
+        "id": "column_log_analysis_results_recommended_action",
+        "tableId": "table_log_analysis_results",
+        "name": "recommended_action",
+        "comment": "AI가 제안한 조치 방법",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 117,
+          "widthComment": 119,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_severity": {
+        "id": "column_log_analysis_results_severity",
+        "tableId": "table_log_analysis_results",
+        "name": "severity",
+        "comment": "AI가 판단한 심각도. 예: LOW, MEDIUM, HIGH, CRITICAL",
+        "dataType": "VARCHAR(20)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 294,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_model_name": {
+        "id": "column_log_analysis_results_model_name",
+        "tableId": "table_log_analysis_results",
+        "name": "model_name",
+        "comment": "분석에 사용한 LLM 모델명",
+        "dataType": "VARCHAR(100)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 70,
+          "widthComment": 142,
+          "widthDataType": 81,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_prompt_version": {
+        "id": "column_log_analysis_results_prompt_version",
+        "tableId": "table_log_analysis_results",
+        "name": "prompt_version",
+        "comment": "분석에 사용한 프롬프트 버전",
+        "dataType": "VARCHAR(50)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 85,
+          "widthComment": 156,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_input_token_count": {
+        "id": "column_log_analysis_results_input_token_count",
+        "tableId": "table_log_analysis_results",
+        "name": "input_token_count",
+        "comment": "LLM 요청 입력 토큰 수",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 100,
+          "widthComment": 121,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_output_token_count": {
+        "id": "column_log_analysis_results_output_token_count",
+        "tableId": "table_log_analysis_results",
+        "name": "output_token_count",
+        "comment": "LLM 응답 출력 토큰 수",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 108,
+          "widthComment": 121,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_results_created_at": {
+        "id": "column_log_analysis_results_created_at",
+        "tableId": "table_log_analysis_results",
+        "name": "created_at",
+        "comment": "AI 분석 결과 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 119,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_id": {
+        "id": "column_log_analysis_references_id",
+        "tableId": "table_log_analysis_references",
+        "name": "id",
+        "comment": "AI 분석 근거 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 110,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_result_id": {
+        "id": "column_log_analysis_references_result_id",
+        "tableId": "table_log_analysis_references",
+        "name": "result_id",
+        "comment": "AI 분석 결과 ID",
+        "dataType": "BIGINT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 2,
+          "widthName": 60,
+          "widthComment": 82,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_document_chunk_id": {
+        "id": "column_log_analysis_references_document_chunk_id",
+        "tableId": "table_log_analysis_references",
+        "name": "document_chunk_id",
+        "comment": "AI 답변 생성 시 참고한 문서 chunk ID",
+        "dataType": "BIGINT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 2,
+          "widthName": 108,
+          "widthComment": 199,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_similarity_score": {
+        "id": "column_log_analysis_references_similarity_score",
+        "tableId": "table_log_analysis_references",
+        "name": "similarity_score",
+        "comment": "사용자 로그와 문서 chunk 간 유사도 점수",
+        "dataType": "DOUBLE PRECISION",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 82,
+          "widthComment": 222,
+          "widthDataType": 108,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_distance": {
+        "id": "column_log_analysis_references_distance",
+        "tableId": "table_log_analysis_references",
+        "name": "distance",
+        "comment": "vector 검색에서 계산된 거리 값. 낮을수록 유사함",
+        "dataType": "DOUBLE PRECISION",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 261,
+          "widthDataType": 108,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_rank_order": {
+        "id": "column_log_analysis_references_rank_order",
+        "tableId": "table_log_analysis_references",
+        "name": "rank_order",
+        "comment": "검색 결과 순위",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 81,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_log_analysis_references_created_at": {
+        "id": "column_log_analysis_references_created_at",
+        "tableId": "table_log_analysis_references",
+        "name": "created_at",
+        "comment": "근거 정보 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 105,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_id": {
+        "id": "column_ai_feedbacks_id",
+        "tableId": "table_ai_feedbacks",
+        "name": "id",
+        "comment": "사용자 피드백 고유 ID",
+        "dataType": "BIGSERIAL",
+        "default": "",
+        "options": 11,
+        "ui": {
+          "keys": 1,
+          "widthName": 60,
+          "widthComment": 119,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_result_id": {
+        "id": "column_ai_feedbacks_result_id",
+        "tableId": "table_ai_feedbacks",
+        "name": "result_id",
+        "comment": "피드백 대상 AI 분석 결과 ID",
+        "dataType": "BIGINT",
+        "default": "",
+        "options": 8,
+        "ui": {
+          "keys": 2,
+          "widthName": 60,
+          "widthComment": 149,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_rating": {
+        "id": "column_ai_feedbacks_rating",
+        "tableId": "table_ai_feedbacks",
+        "name": "rating",
+        "comment": "사용자 평점. 1점부터 5점까지 저장",
+        "dataType": "INTEGER",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 187,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_feedback_type": {
+        "id": "column_ai_feedbacks_feedback_type",
+        "tableId": "table_ai_feedbacks",
+        "name": "feedback_type",
+        "comment": "피드백 유형. 예: GOOD, BAD, WRONG_REFERENCE, HALLUCINATION",
+        "dataType": "VARCHAR(50)",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 78,
+          "widthComment": 364,
+          "widthDataType": 75,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_comment": {
+        "id": "column_ai_feedbacks_comment",
+        "tableId": "table_ai_feedbacks",
+        "name": "comment",
+        "comment": "사용자가 남긴 상세 피드백",
+        "dataType": "TEXT",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 144,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "column_ai_feedbacks_created_at": {
+        "id": "column_ai_feedbacks_created_at",
+        "tableId": "table_ai_feedbacks",
+        "name": "created_at",
+        "comment": "피드백 생성일시",
+        "dataType": "TIMESTAMP",
+        "default": "CURRENT_TIMESTAMP",
+        "options": 8,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 89,
+          "widthDataType": 65,
+          "widthDefault": 122
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      }
+    },
+    "relationshipEntities": {
+      "rel_documents_document_chunks": {
+        "id": "rel_documents_document_chunks",
+        "identification": false,
+        "relationshipType": 16,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "table_documents",
+          "columnIds": [
+            "column_documents_id"
+          ],
+          "x": 635.7692,
+          "y": 208.9231,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "table_document_chunks",
+          "columnIds": [
+            "column_document_chunks_document_id"
+          ],
+          "x": 863.2719,
+          "y": 145.4951,
+          "direction": 1
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "rel_requests_results": {
+        "id": "rel_requests_results",
+        "identification": false,
+        "relationshipType": 16,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "table_log_analysis_requests",
+          "columnIds": [
+            "column_log_analysis_requests_id"
+          ],
+          "x": 627.8462,
+          "y": 560.6154,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "table_log_analysis_results",
+          "columnIds": [
+            "column_log_analysis_results_request_id"
+          ],
+          "x": 810.7321,
+          "y": 577.3865000000001,
+          "direction": 1
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "rel_results_references": {
+        "id": "rel_results_references",
+        "identification": false,
+        "relationshipType": 16,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "table_log_analysis_results",
+          "columnIds": [
+            "column_log_analysis_results_id"
+          ],
+          "x": 1388.7321,
+          "y": 497.3865,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "table_log_analysis_references",
+          "columnIds": [
+            "column_log_analysis_references_result_id"
+          ],
+          "x": 1554.7995,
+          "y": 388.39009999999996,
+          "direction": 1
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "rel_chunks_references": {
+        "id": "rel_chunks_references",
+        "identification": false,
+        "relationshipType": 16,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "table_document_chunks",
+          "columnIds": [
+            "column_document_chunks_id"
+          ],
+          "x": 1382.2719,
+          "y": 145.4951,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "table_log_analysis_references",
+          "columnIds": [
+            "column_log_analysis_references_document_chunk_id"
+          ],
+          "x": 1554.7995,
+          "y": 276.39009999999996,
+          "direction": 1
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "rel_results_feedbacks": {
+        "id": "rel_results_feedbacks",
+        "identification": false,
+        "relationshipType": 16,
+        "startRelationshipType": 2,
+        "start": {
+          "tableId": "table_log_analysis_results",
+          "columnIds": [
+            "column_log_analysis_results_id"
+          ],
+          "x": 1388.7321,
+          "y": 657.3865000000001,
+          "direction": 2
+        },
+        "end": {
+          "tableId": "table_ai_feedbacks",
+          "columnIds": [
+            "column_ai_feedbacks_result_id"
+          ],
+          "x": 1571.0287,
+          "y": 696.8489,
+          "direction": 1
+        },
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      }
+    },
+    "indexEntities": {
+      "index_idx_document_chunks_document_id": {
+        "id": "index_idx_document_chunks_document_id",
+        "name": "idx_document_chunks_document_id",
+        "tableId": "table_document_chunks",
+        "indexColumnIds": [
+          "idxcol_idx_document_chunks_document_id_document_id"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_document_chunks_document_id_document_id"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_log_analysis_requests_status": {
+        "id": "index_idx_log_analysis_requests_status",
+        "name": "idx_log_analysis_requests_status",
+        "tableId": "table_log_analysis_requests",
+        "indexColumnIds": [
+          "idxcol_idx_log_analysis_requests_status_status"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_log_analysis_requests_status_status"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_log_analysis_requests_created_at": {
+        "id": "index_idx_log_analysis_requests_created_at",
+        "name": "idx_log_analysis_requests_created_at",
+        "tableId": "table_log_analysis_requests",
+        "indexColumnIds": [
+          "idxcol_idx_log_analysis_requests_created_at_created_at"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_log_analysis_requests_created_at_created_at"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_log_analysis_results_request_id": {
+        "id": "index_idx_log_analysis_results_request_id",
+        "name": "idx_log_analysis_results_request_id",
+        "tableId": "table_log_analysis_results",
+        "indexColumnIds": [
+          "idxcol_idx_log_analysis_results_request_id_request_id"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_log_analysis_results_request_id_request_id"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_log_analysis_references_result_id": {
+        "id": "index_idx_log_analysis_references_result_id",
+        "name": "idx_log_analysis_references_result_id",
+        "tableId": "table_log_analysis_references",
+        "indexColumnIds": [
+          "idxcol_idx_log_analysis_references_result_id_result_id"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_log_analysis_references_result_id_result_id"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_log_analysis_references_chunk_id": {
+        "id": "index_idx_log_analysis_references_chunk_id",
+        "name": "idx_log_analysis_references_chunk_id",
+        "tableId": "table_log_analysis_references",
+        "indexColumnIds": [
+          "idxcol_idx_log_analysis_references_chunk_id_document_chunk_id"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_log_analysis_references_chunk_id_document_chunk_id"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "index_idx_ai_feedbacks_result_id": {
+        "id": "index_idx_ai_feedbacks_result_id",
+        "name": "idx_ai_feedbacks_result_id",
+        "tableId": "table_ai_feedbacks",
+        "indexColumnIds": [
+          "idxcol_idx_ai_feedbacks_result_id_result_id"
+        ],
+        "seqIndexColumnIds": [
+          "idxcol_idx_ai_feedbacks_result_id_result_id"
+        ],
+        "unique": false,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      }
+    },
+    "indexColumnEntities": {
+      "idxcol_idx_document_chunks_document_id_document_id": {
+        "id": "idxcol_idx_document_chunks_document_id_document_id",
+        "indexId": "index_idx_document_chunks_document_id",
+        "columnId": "column_document_chunks_document_id",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_log_analysis_requests_status_status": {
+        "id": "idxcol_idx_log_analysis_requests_status_status",
+        "indexId": "index_idx_log_analysis_requests_status",
+        "columnId": "column_log_analysis_requests_status",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_log_analysis_requests_created_at_created_at": {
+        "id": "idxcol_idx_log_analysis_requests_created_at_created_at",
+        "indexId": "index_idx_log_analysis_requests_created_at",
+        "columnId": "column_log_analysis_requests_created_at",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_log_analysis_results_request_id_request_id": {
+        "id": "idxcol_idx_log_analysis_results_request_id_request_id",
+        "indexId": "index_idx_log_analysis_results_request_id",
+        "columnId": "column_log_analysis_results_request_id",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_log_analysis_references_result_id_result_id": {
+        "id": "idxcol_idx_log_analysis_references_result_id_result_id",
+        "indexId": "index_idx_log_analysis_references_result_id",
+        "columnId": "column_log_analysis_references_result_id",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_log_analysis_references_chunk_id_document_chunk_id": {
+        "id": "idxcol_idx_log_analysis_references_chunk_id_document_chunk_id",
+        "indexId": "index_idx_log_analysis_references_chunk_id",
+        "columnId": "column_log_analysis_references_document_chunk_id",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      },
+      "idxcol_idx_ai_feedbacks_result_id_result_id": {
+        "id": "idxcol_idx_ai_feedbacks_result_id_result_id",
+        "indexId": "index_idx_ai_feedbacks_result_id",
+        "columnId": "column_ai_feedbacks_result_id",
+        "orderType": 1,
+        "meta": {
+          "updateAt": 1778659900847,
+          "createAt": 1778659900847
+        }
+      }
+    },
+    "memoEntities": {}
+  }
+}
