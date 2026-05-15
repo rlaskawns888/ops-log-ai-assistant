@@ -26,13 +26,17 @@ def create_document_api(
 ):
     return create_document(request, db)
 
+
 #문서 단건 조회 API
 @router.get("/{document_id}", response_model=DocumentResponse)
 def get_document_api(
     document_id: int,
     db: Session = Depends(get_db),    
 ):
-    docuemnt = get_document_by_id(db, document_id)
+    document = get_document_by_id(db, document_id)
+
+    return document
+
 
 #문서 다건 조회 API
 @router.get("", response_model=list[DocumentResponse])

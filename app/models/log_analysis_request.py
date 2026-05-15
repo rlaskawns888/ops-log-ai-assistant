@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime
+from sqlalchemy import Column, BigInteger, Integer, String, Text, DateTime
 from sqlalchemy.sql import func
 
 from app.core.database import Base
@@ -7,11 +7,14 @@ from app.core.database import Base
 class LogAnalysisRequestModel(Base):
     __tablename__ = "log_analysis_requests"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(BigInteger, primary_key=True, index=True)
+    request_title = Column(String(255), nullable=True)
+    raw_log = Column(Text, nullable=False)
+    service_name = Column(String(100), nullable=True)
+    environment = Column(String(50), nullable=True)
+    log_level = Column(String(20), nullable=True)
+    status = Column(String(30), nullable=False, default="PENDING")
 
-    service_name = Column(String(100), nullable=False)
-    log_level = Column(String(20), nullable=False)
-    log_message = Column(Text, nullable=False)
-
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False)
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Text, Float, DateTime, ForeignKey
+from sqlalchemy import Column, BigInteger, String, Text, DateTime, ForeignKey, Integer
 from sqlalchemy.sql import func
 
 from app.core.database import Base
@@ -7,17 +7,17 @@ from app.core.database import Base
 class LogAnalysisResultModel(Base):
     __tablename__ = "log_analysis_results"
 
-    id = Column(Integer, primary_key=True, index=True)
-
-    request_id = Column(
-        Integer,
-        ForeignKey("log_analysis_requests.id"),
-        nullable=False
-    )
+    id = Column(BigInteger, primary_key=True, index=True)
+    request_id = Column(BigInteger, ForeignKey("log_analysis_requests.id"), nullable=False)
 
     summary = Column(Text, nullable=False)
-    cause = Column(Text, nullable=False)
-    solution = Column(Text, nullable=False)
-    confidence_score = Column(Float, nullable=False)
+    root_cause = Column(Text, nullable=True)
+    recommended_action = Column(Text, nullable=True)
+    severity = Column(String(20), nullable=True)
 
-    create_at = Column(DateTime(timezone=True), server_default=func.now())
+    model_name = Column(String(100), nullable=True)
+    prompt_version = Column(String(50), nullable=True)
+    input_token_count = Column(Integer, nullable=True)
+    output_token_count = Column(Integer, nullable=True)
+
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)

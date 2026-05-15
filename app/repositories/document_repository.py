@@ -12,6 +12,7 @@ def save_document(
 ) -> DocumentModel:
     document = DocumentModel( #요청 schema에서 받은 값을 SQLAlchemy Model로 변경
         title=request.title,
+        document_type=request.document_type,
         source=request.source,
         content=request.content
     )

@@ -32,5 +32,6 @@ def create_document(
     return DocumentCreateResponse(
         document_id=document.id,
         title=document.title,
+        document_type=document.document_type,
         chunk_count=len(chunks)
     )

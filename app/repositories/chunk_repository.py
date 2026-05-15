@@ -18,7 +18,7 @@ def save_document_chunks(
 
         chunks.append(chunk)
     
-    db.add_all()
+    db.add_all(chunks)
     db.commit()
 
     for chunk in chunks:
