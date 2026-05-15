@@ -5,9 +5,11 @@ from app.repositories.log_analysis_repository import (
     save_analysis_request,
     save_analysis_result,
 )
-from app.services.embedding_service import create_embedding
+
 from app.services.vector_search_service import search_similar_chunks
 from app.services.llm_service import generate_log_analysis
+
+from app.utils.embedding import create_embedding
 
 
 def analyze_log(
