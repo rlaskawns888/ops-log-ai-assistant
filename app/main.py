@@ -1,9 +1,16 @@
+import logging
+
 from fastapi import FastAPI
 from sqlalchemy import text
 
 from app.core.database import SessionLocal
 from app.routers import document_router
 from app.routers import log_analysis_router
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+)
 
 app = FastAPI(
     title="Ops Log Ai Assistant",

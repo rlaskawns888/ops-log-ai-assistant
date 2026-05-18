@@ -23,6 +23,12 @@ router = APIRouter(
 document_service = DocumentService()
 document_search_service = DocumentSearchService()
 
+# {
+#   "title": "결제 서비스 DB Timeout 대응 문서",
+#   "document_type": "RUNBOOK",
+#   "source": "notion",
+#   "content": "결제 서비스에서 Database connection timeout이 발생하면 먼저 DB connection pool 사용량을 확인한다. connection pool이 모두 사용 중이면 payment-service 인스턴스 수와 DB 최대 연결 수를 점검한다. 또한 DB slow query, DB CPU 사용률, 네트워크 지연 여부를 함께 확인한다. 장애가 지속되면 payment-service를 재시작하기 전에 현재 요청량과 DB 연결 상태를 먼저 확인해야 한다."
+# }
 #문서 저장 API
 @router.post("", response_model=DocumentCreateResponse)
 def create_document_api(
@@ -32,6 +38,11 @@ def create_document_api(
     return document_service.create_document(request,db)
 
 
+# {
+#   "query": "Database connection timeout occurred while processing payment request.",
+#   "top_k": 3,
+#   "threshold": 0.35
+# }
 #문서 조회 API
 @router.post("/search", response_model=DocumentSearchResponse)
 def search_documents(

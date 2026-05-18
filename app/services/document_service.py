@@ -17,7 +17,7 @@ class DocumentService:
         self.repository = DocumentRepository()
         self.chunk_repository = DocumentChunkRepository()
 
-    # 문서 등록 API
+    # 문서 등록
     def create_document(
         self,
         request: DocumentCreateRequest,
@@ -28,7 +28,7 @@ class DocumentService:
             #문서 저장
             document = self.repository.save_document(db, request)
 
-            #Chunk 분리
+            #chunk 분리 (임시)
             chunks = split_text_into_chunks(
                 text=request.content,
                 chunk_size=500,
@@ -38,7 +38,7 @@ class DocumentService:
             chunk_data_list = []
 
             for index, chunk_content in enumerate(chunks):
-                #Embedding
+                #embedding
                 embedding = create_embedding(chunk_content) 
 
                 chunk_data_list.append({

@@ -3,6 +3,7 @@ from typing import Optional
 from sqlalchemy.orm import Session
 
 from app.models.document import Document
+
 from app.schemas.document_schema import DocumentCreateRequest
 
 class DocumentRepository:
@@ -21,9 +22,6 @@ class DocumentRepository:
 
         db.add(document)
         db.flush()
-        
-        # db.commit()
-        # db.refresh(document)
 
         return document
 

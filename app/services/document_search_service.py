@@ -14,12 +14,13 @@ class DocumentSearchService:
     def __init__(self):
         self.repository = DocumentSearchRepository()
 
+    #문서 조회
     def search_documents(
         self,
         request: DocumentSearchRequest,
         db: Session
     ) -> DocumentSearchResponse:
-        #Embedding
+        #embedding
         query_embedding = create_embedding(request.query) 
 
         #유사한 문서 조회

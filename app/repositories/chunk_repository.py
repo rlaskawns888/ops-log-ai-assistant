@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.document_chunk import DocumentChunk
 
 class DocumentChunkRepository:
+    #문서 저장
     def save_document_chunks(
         self,
         db: Session,
@@ -23,9 +24,6 @@ class DocumentChunkRepository:
             chunks.append(chunk)
         
         db.add_all(chunks)
-
-        # for chunk in chunks:
-        #     db.refresh(chunk)
 
         return chunks
 
