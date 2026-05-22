@@ -2,11 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/dineug/erd-editor/main/json-schema/schema.json",
   "version": "3.0.0",
   "settings": {
-    "width": 2000,
-    "height": 2000,
-    "scrollTop": -415,
-    "scrollLeft": -302,
-    "zoomLevel": 0.9,
+    "width": 5000,
+    "height": 5000,
+    "scrollTop": 0,
+    "scrollLeft": -628,
+    "zoomLevel": 1,
     "show": 511,
     "database": 16,
     "databaseName": "ops_log_ai_assistant",
@@ -264,15 +264,15 @@
           "fdac6042-c11f-4878-b86f-99bd71960d60"
         ],
         "ui": {
-          "x": 1356.6666,
-          "y": 770,
+          "x": 872.6666,
+          "y": 852,
           "zIndex": 1,
           "widthName": 69,
           "widthComment": 288,
           "color": ""
         },
         "meta": {
-          "updateAt": 1779090496810,
+          "updateAt": 1779413655301,
           "createAt": 1779090454426
         }
       }
@@ -1411,9 +1411,9 @@
           "columnIds": [
             "a6de8d29-2c6a-4889-b233-974a88fab051"
           ],
-          "x": 1356.6666,
-          "y": 870,
-          "direction": 1
+          "x": 1173.6666,
+          "y": 852,
+          "direction": 4
         },
         "meta": {
           "updateAt": 1779090454426,

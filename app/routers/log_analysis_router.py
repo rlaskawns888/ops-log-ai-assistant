@@ -28,7 +28,6 @@ log_analysis_service = LogAnalysisService()
 #   "top_k": 3,
 #   "threshold": 0.35
 # }
-
 #로그 분석 API
 @router.post(
     "/analyze",

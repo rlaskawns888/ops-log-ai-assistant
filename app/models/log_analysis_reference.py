@@ -10,7 +10,7 @@ class LogAnalysisReference(Base):
 
     result_id = Column(
         BigInteger,
-        ForeignKey("log_analysis.results.id", ondelete="CASCADE"),
+        ForeignKey("log_analysis_results.id", ondelete="CASCADE"),
         nullable=False
     )
 
