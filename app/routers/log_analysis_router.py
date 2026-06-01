@@ -7,6 +7,7 @@ from app.schemas.log_analysis_schema import (
     LogAnalysisResponse,
     LogAnalysisHistoryResponse,
     LogAnalysisResultResponse,
+    LogAnalysisDetailResponse,
 )
 from app.services.log_analysis_service import LogAnalysisService
 
@@ -26,49 +27,29 @@ log_analysis_service = LogAnalysisService()
 #   "environment": "prod",
 #   "log_level": "ERROR",
 #   "top_k": 3,
-#   "threshold": 0.35
+#   "threshold": 1.0
 # }
 #로그 분석 API
 @router.post(
     "/analyze",
     response_model=LogAnalysisResponse
 )
-def analyze_log(
+async def analyze_log(
     request: LogAnalysisRequest,
     db: Session = Depends(get_db)
 ):
-    return log_analysis_service.analyze_log(
+    return await log_analysis_service.analyze_log(
         request=request,
         db=db
     )
 
-
-# #로그 분석 요청 이력 조회
-# @router.get(
-#     "/analysis-requests",
-#     response_model=list[LogAnalysisHistoryResponse]
-# )
-# def get_analysis_requests(
-#     limit: int = 20,
-#     offset: int = 0,
-#     db: Session = Depends(get_db)
-# ):
-#     return log_analysis_service.get_analysis_requests(
-#         db=db,
-#         limit=limit,
-#         offset=offset
-#     )
-
-# #로그 분석 결과 상세 조회
-# @router.get(
-#     "/analysis-requests/{request_id}/result",
-#     response_model=LogAnalysisResultResponse
-# )
-# def get_analysis_result(
-#     request_id: int,
-#     db: Session = Depends(get_db)
-# ):
-#     return log_analysis_service.get_analysis_result(
-#         db=db,
-#         request_id=request_id
-#     )
+# 로그 분석 상세 조회 API
+@router.get("/{analysis_id}", response_model=LogAnalysisDetailResponse)
+def get_log_analysis_detail(
+    analysis_id: int,
+    db: Session = Depends(get_db)
+):
+    return log_analysis_service.get_analysis_detail(
+        analysis_id=analysis_id,
+        db=db
+    )

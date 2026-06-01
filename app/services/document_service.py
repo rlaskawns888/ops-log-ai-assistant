@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+
 from sqlalchemy.orm import Session
 
 from app.schemas.document_schema import (
@@ -8,17 +10,23 @@ from app.schemas.document_schema import (
 from app.repositories.document_repository import DocumentRepository
 from app.repositories.chunk_repository import DocumentChunkRepository
 
+from app.services.embedding_service import (
+    EmbeddingService,
+    EmbeddingServiceError
+)
+
 from app.utils.chunker import split_text_into_chunks
-from app.utils.embedding import create_embedding
+# from app.utils.embedding import create_embedding
 
 
 class DocumentService:
     def __init__(self):
         self.repository = DocumentRepository()
         self.chunk_repository = DocumentChunkRepository()
+        self.embedding_service = EmbeddingService()
 
     # 문서 등록
-    def create_document(
+    async def create_document(
         self,
         request: DocumentCreateRequest,
         db: Session,
@@ -39,7 +47,7 @@ class DocumentService:
 
             for index, chunk_content in enumerate(chunks):
                 #embedding
-                embedding = create_embedding(chunk_content) 
+                embedding = await self.embedding_service.embed_text(chunk_content)
 
                 chunk_data_list.append({
                     "document_id":document.id,
@@ -71,8 +79,16 @@ class DocumentService:
                 message="문서가 성공적으로 등록되었습니다."
             )
         
+        except EmbeddingServiceError as e:
+            db.rollback()
+            raise HTTPException(
+                status_code=502,
+                detail=f"Failed to create document embedding: {str(e)}"
+            )
+        
         except Exception as e:
             db.rollback()
             raise e
         
+
         

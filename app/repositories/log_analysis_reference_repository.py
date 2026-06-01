@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.models.log_analysis_reference import LogAnalysisReference
+from app.models.document import Document
+from app.models.document_chunk import DocumentChunk
 
 
 class LogAnalysisReferenceRepository:
@@ -37,10 +39,25 @@ class LogAnalysisReferenceRepository:
         self,
         db: Session,
         result_id: int
-    ) -> list[LogAnalysisReference]:
-
+    ):
         return (
-            db.query(LogAnalysisReference)
+            db.query(
+                DocumentChunk.id.label("chunk_id"),
+                DocumentChunk.document_id.label("document_id"),
+                Document.title.label("title"),
+                DocumentChunk.content.label("content"),
+                LogAnalysisReference.distance.label("distance"),
+                LogAnalysisReference.similarity_score.label("similarity_score"),
+                LogAnalysisReference.rank_order.label("rank_order"),
+            )
+            .join(
+                DocumentChunk,
+                LogAnalysisReference.document_chunk_id == DocumentChunk.id
+            )
+            .join(
+                Document,
+                DocumentChunk.document_id == Document.id
+            )
             .filter(LogAnalysisReference.result_id == result_id)
             .order_by(LogAnalysisReference.rank_order.asc())
             .all()

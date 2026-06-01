@@ -31,43 +31,22 @@ document_search_service = DocumentSearchService()
 # }
 #문서 저장 API
 @router.post("", response_model=DocumentCreateResponse)
-def create_document_api(
+async def create_document_api(
     request: DocumentCreateRequest,
     db: Session = Depends(get_db),   
 ):
-    return document_service.create_document(request,db)
+    return await document_service.create_document(request,db)
 
 
 # {
 #   "query": "Database connection timeout occurred while processing payment request.",
 #   "top_k": 3,
-#   "threshold": 0.35
+#   "threshold": 1.0
 # }
 #문서 조회 API
 @router.post("/search", response_model=DocumentSearchResponse)
-def search_documents(
+async def search_documents(
     request: DocumentSearchRequest,
     db: Session = Depends(get_db)
 ):
-    return document_search_service.search_documents(request, db)
-
-
-#문서 단건 조회 API
-# @router.get("/{document_id}", response_model=DocumentResponse)
-# def get_document_api(
-#     document_id: int,
-#     db: Session = Depends(get_db),    
-# ):
-#     document = get_document_by_id(db, document_id)
-
-#     return document
-
-
-#문서 다건 조회 API
-# @router.get("", response_model=list[DocumentResponse])
-# def get_documents_api(
-#     limit: int=20,
-#     offset: int=0,
-#     db: Session = Depends(get_db)
-# ):
-#     return get_documents(db, limit=limit, offset=offset)
+    return await  document_search_service.search_documents(request, db)

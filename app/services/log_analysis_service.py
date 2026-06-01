@@ -1,4 +1,4 @@
-import logging, json, time
+import logging, time
 
 from sqlalchemy.orm import Session
 
@@ -13,14 +13,20 @@ from app.repositories.log_analysis_result_repository import LogAnalysisResultRep
 from app.repositories.log_analysis_reference_repository import LogAnalysisReferenceRepository
 from app.repositories.document_search_repository import DocumentSearchRepository
 
+from app.services.embedding_service import (
+    EmbeddingService,
+    EmbeddingServiceError
+)
+
+from app.services.llm_service import (
+    LLMService,
+    LLMServiceError
+)
+
 from app.prompts.log_analysis_prompt import (
     create_system_prompt,
     create_user_prompt,
 )
-
-from app.utils.embedding import create_embedding
-from app.utils.llm_client import call_llm
-
 
 log = logging.getLogger(__name__)
 
@@ -32,8 +38,10 @@ class LogAnalysisService:
         self.result_repository = LogAnalysisResultRepository()
         self.reference_repository =  LogAnalysisReferenceRepository()
         self.document_search_repository = DocumentSearchRepository()
+        self.embedding_service = EmbeddingService()
+        self.llm_service = LLMService()
 
-    def analyze_log(
+    async def analyze_log(
             self, 
             request: LogAnalysisRequest, 
             db:Session
@@ -49,7 +57,7 @@ class LogAnalysisService:
             start_time = time.time()
 
             #embedding
-            query_embedding = create_embedding(request.raw_log) 
+            query_embedding = await self.embedding_service.embed_text(request.raw_log) 
 
             #관련 운영 문서 chunk검색
             similar_chunks = self.document_search_repository.search_similar_chunks( 
@@ -89,19 +97,19 @@ class LogAnalysisService:
                 )
             
             # prompt system, user
-            system_prompt = create_system_prompt
+            system_prompt = create_system_prompt()
             user_prompt = create_user_prompt(
                 request=request,
                 similar_chunks=similar_chunk_dicts
             )
 
             # Open AI call
-            llm_response_text = call_llm(
+            llm_result = await self.llm_service.analyze_log(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt
             )
 
-            llm_response = json.loads(llm_response_text)
+            llm_response = llm_result["content"]
 
             end_time = time.time()
             latency_ms = int((end_time - start_time) * 1000)
@@ -114,9 +122,9 @@ class LogAnalysisService:
             model_name = "dummy-llm"
             prompt_version = "v1"
 
-            input_token_count = None
-            output_token_count = None
-            total_tokens = None
+            input_token_count = llm_result.get("input_token_count")
+            output_token_count = llm_result.get("output_token_count")
+            total_tokens = llm_result.get("total_tokens")
 
             saved_result = self.result_repository.save_result(
                 db=db,
@@ -216,7 +224,7 @@ class LogAnalysisService:
             referenced_chunks = [
                 SimilarChunkResponse(
                     chunk_id=row.chunk_id,
-                    document_id=row.document_id,
+                    document_id=row.document_id,                    
                     title=row.title,
                     content=row.content,
                     distance=row.distance,
