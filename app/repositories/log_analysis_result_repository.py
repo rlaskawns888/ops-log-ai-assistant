@@ -41,6 +41,18 @@ class LogAnalysisResultRepository:
 
         return result
 
+    def find_by_id(
+        self,
+        db: Session,
+        result_id: int
+    ) -> LogAnalysisResult | None:
+
+        return (
+            db.query(LogAnalysisResult)
+            .filter(LogAnalysisResult.id == result_id)
+            .first()
+        )
+
     def find_by_request_id(
         self,
         db: Session,
@@ -52,3 +64,4 @@ class LogAnalysisResultRepository:
             .filter(LogAnalysisResult.request_id == request_id)
             .first()
         )
+    

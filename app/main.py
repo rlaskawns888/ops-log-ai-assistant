@@ -6,6 +6,7 @@ from sqlalchemy import text
 from app.core.database import SessionLocal
 from app.routers import document_router
 from app.routers import log_analysis_router
+from app.routers import feedback_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -44,3 +45,4 @@ def database_health_check():
 
 app.include_router(document_router.router)
 app.include_router(log_analysis_router.router)
+app.include_router(feedback_router.router)
